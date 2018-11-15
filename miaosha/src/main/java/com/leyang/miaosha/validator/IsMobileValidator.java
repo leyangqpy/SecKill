@@ -1,0 +1,33 @@
+package com.leyang.miaosha.validator;
+
+import com.leyang.miaosha.util.ValidatorUtil;
+import org.apache.commons.lang3.StringUtils;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+
+/**
+ * Created by qianpyn on 2018/5/31.
+ */
+public class IsMobileValidator implements ConstraintValidator<IsMobile, String> {
+
+    private boolean required = false;
+
+    @Override
+    public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
+        if (required) {
+            return ValidatorUtil.isMobile(s);
+        } else {
+            if (StringUtils.isEmpty(s)) {
+                return true;
+            } else {
+                return ValidatorUtil.isMobile(s);
+            }
+        }
+    }
+
+    @Override
+    public void initialize(IsMobile constraintAnnotation) {
+       required =  constraintAnnotation.required();
+    }
+}
